@@ -1,0 +1,24 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+    <tr>
+      <th scope="col" class="px-6 py-3">ID Client</th>
+      <th scope="col" class="px-6 py-3">Client Name</th>
+      <th scope="col" class="px-6 py-3">Code</th>
+      <th scope="col" class="px-6 py-3">Email Address</th>
+      <th scope="col" class="px-6 py-3">Accounts</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let client of Clients" class="bg-white border-b">
+      <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ client.id }}</th>
+      <td class="px-6 py-4">{{ client.nom }}</td>
+      <td class="px-6 py-4">{{ client.code }}</td>
+      <td class="px-6 py-4">{{ client.id }}</td>
+      <td class="px-6 py-4">
+        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Accounts</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
