@@ -1,9 +1,11 @@
 package org.example.miniprojet.Services;
 
+import org.example.miniprojet.Dao.EmployeDao;
 import org.example.miniprojet.Entity.Employe;
 import org.example.miniprojet.Exception.UsernameNotFoundException;
 import org.example.miniprojet.repository.EmployeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,8 +13,16 @@ public class EmployeService {
     @Autowired
     EmployeRepo employeRepo;
 
-    public void CreatEmploye(Employe employe){
-        employeRepo.save(employe);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public void CreatEmploye(EmployeDao employe){
+        Employe employe1 = new Employe();
+        employe1.setCodeEmploye(employe.getCodeEmploye());
+        employe1.setNomEmploye(employe.getNom());
+        employe1.setEmail(employe.getEmail());
+        employe1.setPassword(passwordEncoder.encode(employe.getPassword()));
+        employeRepo.save(employe1);
     }
 
     public Employe getEmploye(Long id) throws UsernameNotFoundException {

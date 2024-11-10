@@ -8,10 +8,22 @@ import lombok.*;
 @Getter @Setter @ToString @NoArgsConstructor
 @AllArgsConstructor
 
-public class Client {
+public class Client extends  GrandUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
    public Long id;
     String nom;
     Long code;
+    String telephone;
+
+
+    @Override
+    public String getRole() {
+        return "USER_CLIENT";
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }

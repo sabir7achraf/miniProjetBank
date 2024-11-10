@@ -12,15 +12,22 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employe {
+public class Employe extends GrandUser   {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-
     String nomEmploye;
     Long codeEmploye;
 
 
 
+    @Override
+    public String getRole() {
+        return "USER_EMPLOYE";
+    }
 
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 }

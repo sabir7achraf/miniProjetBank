@@ -25,6 +25,7 @@ public class ComptService {
     @Autowired
     public ClientRepo clientRepo;
 
+    @Autowired
     public OperationRepo opRepo;
 
 
@@ -37,6 +38,7 @@ public class ComptService {
         compte1.setEmploye(employe1);
         Client client = clientRepo.findById(clientId).get();
         compte1.setClient(client);
+        compteRepo.save(compte1);
     }
     public void Versement(String numCompte,String nomEmp,Double montant){
         Compte compte = compteRepo.findByNumCompte(numCompte);
@@ -74,25 +76,38 @@ public class ComptService {
     public void virement(String send ,String recu,Double montant ,String emp){
         Compte compSend = compteRepo.findByNumCompte(send);
         Compte compRecu = compteRepo.findByNumCompte(recu);
+        if(compSend.getSolde() >= montant) {
+            Employe employe = employeRepo.findBynomEmploye(emp);
 
-        Employe employe = employeRepo.findBynomEmploye(emp);
-        Operation op = new Operation();
-        op.setDateOperation(new Date());
-        op.setMontant(montant);
-        op.setTypeOperation(TypeOperation.VIREMENT);
-        op.setEmploye(employe);
-        op.setDescription("le compte "+ compSend.getNumCompte()+" envoi un montant de "+montant +" vers le compte "+compRecu.getNumCompte());
-        opRepo.save(op);
+            // Opération pour le compte émetteur
+            Operation opSend = new Operation();
+            opSend.setDateOperation(new Date());
+            opSend.setMontant(-montant);
+            opSend.setTypeOperation(TypeOperation.VIREMENT);
+            opSend.setEmploye(employe);
+            opSend.setDescription("Débit pour le compte " + compSend.getNumCompte() + " vers le compte " + compRecu.getNumCompte());
+            opRepo.save(opSend);
+            compSend.getOperationList().add(opSend);
 
-        compSend.getOperationList().add(op);
-        compRecu.getOperationList().add(op);
+            // Opération pour le compte récepteur
+            Operation opRecu = new Operation();
+            opRecu.setDateOperation(new Date());
+            opRecu.setMontant(montant);
+            opRecu.setTypeOperation(TypeOperation.VIREMENT);
+            opRecu.setEmploye(employe);
+            opRecu.setDescription("Crédit pour le compte " + compRecu.getNumCompte() + " depuis le compte " + compSend.getNumCompte());
+            opRepo.save(opRecu);
+            compRecu.getOperationList().add(opRecu);
 
-        compSend.setSolde(compSend.getSolde() - montant);
-        compRecu.setSolde(compRecu.getSolde() + montant);
+            // Mise à jour des soldes
+            compSend.setSolde(compSend.getSolde() - montant);
+            compRecu.setSolde(compRecu.getSolde() + montant);
 
-
-        compteRepo.save(compRecu);
-        compteRepo.save(compSend);
+            // Sauvegarde des comptes
+            compteRepo.save(compSend);
+            compteRepo.save(compRecu);
+        } else
+            System.out.println("Votre solde est insuffisant.");
     }
     public Compte consulter( Long id) throws UsernameNotFoundException {
          return compteRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException("Compte not found"));

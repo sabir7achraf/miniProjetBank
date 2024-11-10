@@ -7,10 +7,10 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeDao {
+public class SupEmployeDao {
     Long id;
     String nom;
+    String prenom;
     String email;
-    String password;
-   Long codeEmploye;
+    String password ;
 }

@@ -12,7 +12,6 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Operation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,10 @@
 package org.example.miniprojet.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table
@@ -20,5 +22,5 @@ public class Groupe {
     Long numGroup;
 
     @ManyToMany
-    List<Employe> employees;
+    List<Employe> employees=new ArrayList<>();
 }

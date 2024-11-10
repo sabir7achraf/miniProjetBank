@@ -1,5 +1,6 @@
 package org.example.miniprojet.Services;
 
+import org.example.miniprojet.Dao.GroupeDao;
 import org.example.miniprojet.Entity.Employe;
 import org.example.miniprojet.Entity.Groupe;
 import org.example.miniprojet.Exception.UsernameNotFoundException;
@@ -17,13 +18,17 @@ public class GroupService {
     @Autowired
     public EmployeRepo employeRepo;
 
-    public void CreateGroup(Groupe groupe){
-        groupeRepo.save(groupe);
+    public void CreateGroup(GroupeDao groupe){
+        Groupe newGroupe = new Groupe();
+        newGroupe.setNomGroup(groupe.getNomGroup());
+        newGroupe.setNumGroup(groupe.getNumGroup());
+        groupeRepo.save(newGroupe);
     }
+
     public void affectEmployeToGroup(String groupeNom, String employeNom) throws UsernameNotFoundException {
         Groupe grp = groupeRepo.findByNomGroup(groupeNom).orElseThrow(() -> new UsernameNotFoundException("groupe does not exist"));
         Employe employe = employeRepo.findBynomEmploye(employeNom);
         grp.getEmployees().add(employe);
-
+        groupeRepo.save(grp);
     }
 }
