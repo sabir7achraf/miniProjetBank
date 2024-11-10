@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class bank {
@@ -85,6 +86,16 @@ public class bank {
     public String affecterEmpToGrp(@RequestBody EmpToGrpRequest request) throws UsernameNotFoundException {
        groupService.affectEmployeToGroup(request.getNomGrp(),request.getNomEmp());
        return "Your employe has been affected to "+request.getNomEmp();
+    }
+
+    @GetMapping("/client ")
+    public List<Client> getClient() {
+      return  clientService.getAllClient();
+    }
+
+    @GetMapping("/client/{id}")
+    public Optional<Client> getClient(@PathVariable Long id ){
+       return clientService.getClient(id);
     }
 
     @PostMapping("/versement")
