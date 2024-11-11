@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {Client} from '../services/models/client.model';
-import {ClientService} from '../services/client.service';
+import {Client} from '../../services/models/client.model';
+import {ClientService} from '../../services/client.service';
 import {NgForOf} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 

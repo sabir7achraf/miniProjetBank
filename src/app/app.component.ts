@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {EmployeeDashboardComponent} from './employee-dashboard/employee-dashboard.component';
-import {UsersComponent} from './users/users.component';
+import {UsersComponent} from './employee-dashboard/users/users.component';
 import {HttpClientModule} from '@angular/common/http';
 
 @Component({
