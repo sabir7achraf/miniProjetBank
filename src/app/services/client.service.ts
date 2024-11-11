@@ -7,7 +7,7 @@ import {Client} from './models/client.model';
     providedIn: 'root'
 })
 export class ClientService {
-   private baseUrl = 'http://localhost:8085';
+   private baseUrl = 'http://localhost:8080';
 
     constructor(private http: HttpClient) {}
         getClients(): Observable<Client[]> {
