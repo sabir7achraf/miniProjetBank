@@ -9,6 +9,8 @@ import org.example.miniprojet.repository.GroupeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GroupService {
 
@@ -30,5 +32,9 @@ public class GroupService {
         Employe employe = employeRepo.findBynomEmploye(employeNom);
         grp.getEmployees().add(employe);
         groupeRepo.save(grp);
+    }
+
+    public List<Groupe> getAllGroup() {
+        return groupeRepo.findAll();
     }
 }

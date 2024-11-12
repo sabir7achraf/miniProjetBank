@@ -8,6 +8,7 @@ import org.example.miniprojet.repository.ComptRepo;
 import org.example.miniprojet.repository.EmployeRepo;
 import org.example.miniprojet.repository.OperationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @Service
 public class ComptService {
     @Autowired
-    public ComptRepo compteRepo;
+    public  ComptRepo compteRepo;
 
     @Autowired
     public EmployeRepo employeRepo;
@@ -27,6 +28,10 @@ public class ComptService {
 
     @Autowired
     public OperationRepo opRepo;
+
+    public List<Compte> getAllComptes() {
+        return compteRepo.findAll();
+    }
 
 
     public void  CreateCompte(CompteDao compte, Long clientId, Long employeId) throws UsernameNotFoundException {

@@ -72,8 +72,13 @@ public class bank {
 
     @PostMapping("/createClient")
     public String createClient(@RequestBody ClientDao cli) {
+       try {
        clientService.CreateClient(cli);
        return "Your client has been created";
+    } catch (Exception e) {
+        e.printStackTrace(); // Log the exception
+        return "Failed to create client";
+    }
    }
 
     @PostMapping("/createGroup")
@@ -88,7 +93,8 @@ public class bank {
        return "Your employe has been affected to "+request.getNomEmp();
     }
 
-    @GetMapping("/client ")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/client")
     public List<Client> getClient() {
       return  clientService.getAllClient();
     }
@@ -110,10 +116,16 @@ public class bank {
         return "Your Operation 'retrait' has been validated";
     }
 
-    @PostMapping("/virment")
+    @PostMapping("/virement")
     public String virment(@RequestBody VirmentRequest virmentRequest){
        comptService.virement(virmentRequest.getNumCompteSend(),virmentRequest.getNumCompteRecu(),virmentRequest.getMontant(),virmentRequest.getNomEmploye());
        return " votre virment vers le compte "+ virmentRequest.getNumCompteRecu() +" est validated";
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/Allcomptes")
+    public List<Compte> getComptes(){
+       return comptService.getAllComptes();
     }
 
     @GetMapping("/compte/{Id}")
@@ -137,6 +149,15 @@ public class bank {
             return ResponseEntity.ok(response);
         }
         return null;
+    }
+    @GetMapping("/employes")
+    public List<Employe> getEmployes() {
+        return  employeService.getAllEmployes();
+    }
+
+    @GetMapping("/groupes")
+    public List<Groupe> consulterComptes ( ){
+        return groupService.getAllGroup();
     }
 
 

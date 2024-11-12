@@ -8,5 +8,8 @@ import java.util.Optional;
 
 public interface EmployeRepo extends JpaRepository<Employe,Long> {
     public Employe findBynomEmploye(String nom);
+
     public Optional<GrandUser> findEmployeByEmail(String email);
+
+
 }

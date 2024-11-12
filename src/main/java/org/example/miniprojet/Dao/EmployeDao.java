@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class EmployeDao {
     Long id;
-    String nom;
+    String nomEmploye;
     String email;
     String password;
    Long codeEmploye;

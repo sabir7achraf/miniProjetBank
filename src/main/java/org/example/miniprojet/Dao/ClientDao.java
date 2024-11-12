@@ -6,7 +6,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientDao {
-    public Long id;
     String nom;
     Long code;
     String telephone;

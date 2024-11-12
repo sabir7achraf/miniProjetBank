@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @Configuration
@@ -34,9 +36,9 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/createClient","/createCompte","/retrait","versement","/comptes/","/compte/").hasAuthority("ROLE_USER_EMPLOYE")
-                        .requestMatchers("/createEmploye","/affecterEmpToGrp","/createGroup").hasAuthority("ROLE_USER_SUPEREMPLOYE")
-                        .requestMatchers("/virment","/comptes/","/compte/").hasAuthority("ROLE_USER_CLIENT")// Allow public access to specific endpoints
+                        .requestMatchers("/createClient","/createCompte","/retrait","versement","/comptes/","/compte/","/Allcomptes").permitAll()
+                        .requestMatchers("/createEmploye","/affecterEmpToGrp","/createGroup").permitAll()
+                        .requestMatchers("/virment","/comptes/","/compte/").permitAll()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
@@ -60,5 +62,19 @@ public class SecurityConfig {
         authenticationProvider.setUserDetailsService(userService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry){
+                registry.addMapping("/**") //apply CORS to all endpoints
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET","POST","PUT","DELETE")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
     }
 }

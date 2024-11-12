@@ -1,5 +1,6 @@
 package org.example.miniprojet.repository;
 
+import org.example.miniprojet.Dao.CompteDao;
 import org.example.miniprojet.Entity.Client;
 import org.example.miniprojet.Entity.Compte;
 import org.springframework.data.jpa.repository.JpaRepository;
